@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace WelfareDenmark.Models
 {
-    public class BrainGame
+    public class GameResultDTO
     {
-        public long Id { get; set; }
         public string Name { get; set; }
-        public List<GameResult> Results { get; set; } = new List<GameResult>();
+        public double Score { get; set; }
+        public string Player { get; set; }
     }
 }
