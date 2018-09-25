@@ -1,6 +1,27 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Your data";
     Layout = "_Layout";
 }
 
 <h2>Enter your data</h2>
+@*@model VisitCalifornia.Models.Post*@
+<fieldset>
+
+	@using (Html.BeginForm()) {
+	@Html.ValidationSummary()
+	<p>
+		@Html.LabelFor(p => p.Title)
+		@Html.EditorFor(p => p.Title)
+		@Html.ValidationMessageFor(p => p.Title)
+	</p>
+	<p>
+		@Html.LabelFor(p => p.Body)
+		@Html.EditorFor(p => p.Body)
+		@Html.ValidationMessageFor(p => p.Body)
+	</p>
+	<p>
+		<button type="submit">Create Post</button>
+	</p>
+    }
+</fieldset>
