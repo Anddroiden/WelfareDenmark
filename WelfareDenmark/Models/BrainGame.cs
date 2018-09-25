@@ -7,6 +7,7 @@ namespace WelfareDenmark.Models
 {
     public class BrainGame
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<GameResult> Results { get; set; }
     }
