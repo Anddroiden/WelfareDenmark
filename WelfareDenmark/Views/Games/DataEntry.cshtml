@@ -1,0 +1,31 @@
+﻿@model GameResultDTO
+@{
+    ViewBag.Title = "Your data";
+    Layout = "_Layout";
+}
+
+<h2>Enter your data</h2>
+<fieldset>
+
+	@using (Html.BeginForm()) {
+	@Html.ValidationSummary()
+	<p>
+		@Html.LabelFor(p => p.Name)
+		@Html.EditorFor(p => p.Name)
+		@Html.ValidationMessageFor(p => p.Name)
+	</p>
+	<p>
+		@Html.LabelFor(p => p.Score)
+		@Html.EditorFor(p => p.Score)
+		@Html.ValidationMessageFor(p => p.Score)
+	</p>
+	<p>
+		@Html.LabelFor(p => p.Player)
+		@Html.EditorFor(p => p.Player)
+		@Html.ValidationMessageFor(p => p.Player)
+	</p>
+	<p>
+		<button type="submit">Submit Data</button>
+	</p>
+    }
+</fieldset>
