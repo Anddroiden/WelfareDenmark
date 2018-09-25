@@ -1,9 +1,13 @@
 @model object
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Games";
     Layout = "_Layout";
 }
 
 <h2>title</h2>
 @Html.ActionLink("Reaction","Reaction","Games")
+
+<div>
+	@Html.ActionLink("Enter your data", "DataEntry", "Games")
+</div>

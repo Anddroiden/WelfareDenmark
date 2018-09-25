@@ -9,5 +9,9 @@ namespace WelfareDenmark.Controllers {
         public IActionResult Index() {
             return View();
         }
+
+        public IActionResult DataEntry() {
+            return View();
+        }
     }
 }
