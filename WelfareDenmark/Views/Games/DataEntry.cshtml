@@ -11,17 +11,22 @@
 	@using (Html.BeginForm()) {
 	@Html.ValidationSummary()
 	<p>
-		@Html.LabelFor(p => p.Title)
-		@Html.EditorFor(p => p.Title)
-		@Html.ValidationMessageFor(p => p.Title)
+		@Html.LabelFor(p => p.Id)
+		@Html.EditorFor(p => p.Id)
+		@Html.ValidationMessageFor(p => p.Id)
 	</p>
 	<p>
-		@Html.LabelFor(p => p.Body)
-		@Html.EditorFor(p => p.Body)
-		@Html.ValidationMessageFor(p => p.Body)
+		@Html.LabelFor(p => p.Score)
+		@Html.EditorFor(p => p.Score)
+		@Html.ValidationMessageFor(p => p.Score)
 	</p>
 	<p>
-		<button type="submit">Create Post</button>
+		@Html.LabelFor(p => p.Player)
+		@Html.EditorFor(p => p.Player)
+		@Html.ValidationMessageFor(p => p.Player)
+	</p>
+	<p>
+		<button type="submit">Submit Data</button>
 	</p>
     }
 </fieldset>
