@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using WelfareDenmark.Data;
+using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
     public class GamesController : Controller {
@@ -26,7 +27,16 @@ namespace WelfareDenmark.Controllers {
             if (!ModelState.IsValid) {
                 return View();
             }
-            var brainGame = _db.BrainGames.First(bg=>bg.Name == dto.Name);
+            var brainGame = _db.BrainGames.FirstOrDefault(bg=>bg.Name == dto.Name);
+            if(brainGame is null){
+                brainGame = new BrainGame { Name = dto.Name };
+                _db.BrainGames.Add(brainGame);
+            }
+            var result = new GameResult{
+                Score = dto.Score,
+                Player = dto.Player,
+            };
+            brainGame.Results.Add(result);
             _db.SaveChanges();
             return View();
         }
