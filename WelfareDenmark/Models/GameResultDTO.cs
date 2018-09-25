@@ -16,6 +16,7 @@ namespace WelfareDenmark.Models
         
 
         [Required]
+        [Range(double.MinValue, double.MaxValue, ErrorMessage = "Please enter valid doubleNumber")]
         public double Score { get; set; }
 
         [Display(Name = "Player Name")]
