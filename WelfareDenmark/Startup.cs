@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,9 +34,11 @@ namespace WelfareDenmark
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => {
+                options.UseInMemoryDatabase("Default");
+//                options.UseSqlServer(
+//                    Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -54,12 +56,12 @@ namespace WelfareDenmark
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+//                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+//            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+//            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
