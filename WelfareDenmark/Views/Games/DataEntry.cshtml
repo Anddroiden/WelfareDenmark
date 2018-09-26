@@ -1,4 +1,6 @@
-﻿@model GameResultDTO
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GameResultDTO
 @{
     ViewBag.Title = "Your data";
     Layout = "_Layout";
@@ -7,25 +9,31 @@
 <h2>Enter your data</h2>
 <fieldset>
 
-	@using (Html.BeginForm()) {
-	@Html.ValidationSummary()
-	<p>
-		@Html.LabelFor(p => p.Name)
-		@Html.EditorFor(p => p.Name)
-		@Html.ValidationMessageFor(p => p.Name)
-	</p>
-	<p>
-		@Html.LabelFor(p => p.Score)
-		@Html.EditorFor(p => p.Score)
-		@Html.ValidationMessageFor(p => p.Score)
-	</p>
-	<p>
-		@Html.LabelFor(p => p.Player)
-		@Html.EditorFor(p => p.Player)
-		@Html.ValidationMessageFor(p => p.Player)
-	</p>
-	<p>
-		<button type="submit">Submit Data</button>
-	</p>
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary()
+        <div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Name") == ModelValidationState.Invalid?"is-invalid":"")" >
+                <label asp-for="Name" class="mdl-textfield__label"></label>
+                <input asp-for="Name" class = "mdl-textfield__input" />
+                <span asp-validation-for="Name" class="mdl-textfield__error"></span>
+            </div>
+        </div>
+        <div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Score") == ModelValidationState.Invalid?"is-invalid":"")" >
+                <label asp-for="Score" class="mdl-textfield__label"></label>
+                <input asp-for="Score" class = "mdl-textfield__input"  pattern="-?[0-9][0-9]*"/>
+                <span asp-validation-for="Score" class="mdl-textfield__error"></span>
+            </div>
+        </div>
+        <div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Player") == ModelValidationState.Invalid?"is-invalid":"")" >
+                <label asp-for="Player" class="mdl-textfield__label"></label>
+                <input asp-for="Player" class = "mdl-textfield__input" />
+                <span asp-validation-for="Player" class="mdl-textfield__error"></span>
+            </div>
+        </div>
+        <div>
+            <button class="mdl-button mdl-button--raised" type="submit">Submit Data</button>
+        </div>
     }
 </fieldset>
