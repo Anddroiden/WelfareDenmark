@@ -40,6 +40,7 @@ namespace WelfareDenmark.Controllers {
             var result = new GameResult {
                 Score = dto.Score,
                 Player = dto.Player,
+                DateTime = dto.DateTime
             };
 //            _db.Results.Add(result);
             brainGame.GameResults.Add(result);

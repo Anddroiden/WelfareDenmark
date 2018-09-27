@@ -30,6 +30,6 @@ namespace WelfareDenmark.Models
 		[Display(Name = "Date and Time")]
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }
