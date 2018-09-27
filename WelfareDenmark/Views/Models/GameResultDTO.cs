@@ -24,5 +24,12 @@ namespace WelfareDenmark.Models
         [Required]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Your Name must be between 1 and 100 characters long")]
         public string Player { get; set; }
+
+
+
+		[Display(Name = "Date and Time")]
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime dateTime { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WelfareDenmark.Models
+﻿using System;
+
+namespace WelfareDenmark.Models
 {
     public class GameResult
     {
@@ -7,4 +9,7 @@
         public string Player { get; set; }
         public BrainGame BrainGame { get; set; }
     }
+        public DateTime dateTime { get; set; }
+		
+		}
 }
