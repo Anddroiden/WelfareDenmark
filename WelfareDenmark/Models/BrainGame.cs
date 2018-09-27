@@ -9,6 +9,10 @@ namespace WelfareDenmark.Models
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public List<GameResult> Results { get; set; } = new List<GameResult>();
+        public ICollection<GameResult> GameResults { get; set; }
+
+        public BrainGame() {
+            GameResults = new HashSet<GameResult>();
+        }
     }
 }

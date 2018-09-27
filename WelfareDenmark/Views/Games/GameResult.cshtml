@@ -1,0 +1,16 @@
+@model GameResultDTO
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+<div>
+    @Html.LabelFor(g=>g.Name)
+    @Html.DisplayFor(g => g.Name)
+</div>
+<div>
+    @Html.LabelFor(g=>g.Score)
+    @Html.DisplayFor(g => g.Score)
+</div>
