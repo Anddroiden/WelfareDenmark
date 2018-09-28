@@ -13,12 +13,5 @@ namespace WelfareDenmark.Data {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) {
         }
-
-        protected override void OnModelCreating(ModelBuilder builder) {
-            builder.Entity<BrainGame>().HasMany(bg => bg.GameResults)
-                .WithOne(g => g.BrainGame);
-            builder.Entity<GameResult>().HasOne(b => b.BrainGame).WithMany(g => g.GameResults);
-            base.OnModelCreating(builder);
-        }
     }
 }
