@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -72,37 +73,13 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 IdentityResult IR = null;
-                var user_ = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 
-                var result = await _userManager.CreateAsync(user_, Input.Password);
-                var uid = user_.Id;
-                var role = "Administrator";
-                _logger.LogCritical(_roleManager.ToString());
-                if (_roleManager == null)
-                {
-                    throw new Exception("roleManager null");
-                }
-
-                if (!await _roleManager.RoleExistsAsync(role))
-                {
-                    IR = await _roleManager.CreateAsync(new IdentityRole(role));
-                    _logger.LogCritical(IR.Succeeded.ToString());
-                }
-
-                var userManager = _userManager;
-
-                var user = await userManager.FindByIdAsync(uid);
-                _logger.LogCritical(user.Id);
-
-                IR = await userManager.AddToRoleAsync(user, role);
-                _logger.LogCritical(IR.Succeeded.ToString());
-                var roles = await userManager.GetRolesAsync(user);
-                _logger.LogCritical(roles.First().ToString());
-
+                var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    await _userManager.AddClaimAsync(user, new Claim("IsPatient", "false"));
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",

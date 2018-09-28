@@ -9,14 +9,13 @@ using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class HomeController : Controller
-    {
+    { 
         public IActionResult Index()
         {
             return View();
         }
-
+        [Route("/about")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WelfareDenmark.Data;
@@ -21,11 +22,13 @@ namespace WelfareDenmark.Controllers {
             return View();
         }
 
+        [Authorize(Policy = "Patient")]
         [HttpGet]
         public IActionResult DataEntry() {
             return View();
         }
 
+        [Authorize(Policy = "Patient")]
         [HttpPost]
         public IActionResult DataEntry(GameResultDTO dto) {
             if (!ModelState.IsValid) {
@@ -43,7 +46,6 @@ namespace WelfareDenmark.Controllers {
                 Player = dto.Player,
                 DateTime = dto.DateTime
             };
-//            _db.Results.Add(result);
             brainGame.GameResults.Add(result);
             _db.SaveChanges();
             return RedirectToAction("GameResult", new {brainGameId = brainGame.Id, gameResultId = result.Id});
@@ -51,7 +53,7 @@ namespace WelfareDenmark.Controllers {
 
         [Route("game-result/{brainGameId}/{gameResultId}")]
         public IActionResult GameResult(long brainGameId, long gameResultId) {
-            var brainGame = _db.BrainGames.Include(b=>b.GameResults).FirstOrDefault(b=>b.Id == brainGameId);
+            var brainGame = _db.BrainGames.Include(b => b.GameResults).FirstOrDefault(b => b.Id == brainGameId);
             var gameResult = brainGame?.GameResults?.FirstOrDefault(r => r.Id == gameResultId);
             if (gameResult is null) {
                 return NotFound();
