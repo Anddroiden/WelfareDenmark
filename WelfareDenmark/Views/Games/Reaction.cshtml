@@ -2,13 +2,31 @@
     ViewBag.Title = "Reaction Game";
     Layout = "_Layout";
 }
+<style>
+.stopped{
+    background: #DF0C0C;
+}
+.stopped::before{
+    content: "start";
+}
+.waiting{
+    background: yellow;
+}
+.waiting::before{
+    content: "get ready";
+}
+.ready{
+    background: green;
+}
+.ready::before{
+    content: "click!!!";
+}
 
+</style>
 <h2>Reaction Game</h2>
 
     <div>
-        <button id="startButton" value="start" style="width: 400px; height: 400px; position:absolute; top: 40%; left: 35%; background-color: #DF0C0C; font-size : 100px; ">
-            Start
-            
+        <button id="startButton" value="start" style="width: 400px; height: 400px; position:absolute; top: 40%; left: 35%; font-size : 100px; ">
         </button>
         <div id="timeDisplay"></div>
     </div>
