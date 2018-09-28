@@ -61,6 +61,7 @@ namespace WelfareDenmark
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789$-._@+";
                 options.User.RequireUniqueEmail = false;
+                
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
