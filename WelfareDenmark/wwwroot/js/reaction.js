@@ -1,7 +1,7 @@
 (function () {
     
     /** @type string*/ 
-    var state = 'stopped';
+    var state;
     
     /** @type Date*/ 
     var startTime;
@@ -14,26 +14,35 @@
     
     /** @type HTMLElement*/
     var startButton = document.getElementById("startButton");
+    var timeout;
     
+    changeState('stopped');
     startButton.addEventListener("click", onStartClick);
     
+    function changeState(newState){
+        state = newState;
+        startButton.className = newState;
+    }
+
     function start() {
-        state = 'waiting';
-        setTimeout(waitToReady, 3000);
+        
+        changeState('waiting')
+        timeout = setTimeout(waitToReady, 3000);
     }
 
     function end() {
-        state = 'stopped';
+        changeState('stopped');
+        clearTimeout(timeout);
     }
 
     function react() {
-        state = 'stopped';
+        changeState('stopped')
         timeElapsed = new Date() - startTime;
-        timeDisplay.innerHTML = 'Your reaction time was ' + timeElapsed;
+        timeDisplay.innerHTML = 'Your reaction time was ' + timeElapsed + ' milliseconds';
     }
 
     function waitToReady() {
-        state = 'ready';
+        changeState('ready');
         startTime = new Date();
     }
 
@@ -42,14 +51,14 @@
             start();
         }
 
-        if (state === 'waiting') {
+        else if (state === 'waiting') {
             end();
-            console.log("you clicked too early");
-
+            alert("you clicked too early");
         }
 
-        if (state === 'ready') {
+        else if (state === 'ready') {
             react();
+            
         }
     }
 })();

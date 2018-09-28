@@ -23,11 +23,11 @@
     <header class="mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
             <!-- Title -->
-            <span class="mdl-layout-title">Title</span>
+            <span class="mdl-layout-title"><a class="mdl-navigation__link" href="@Url.Action("Index", "Home")">Title</a></span>
             <!-- Left Navigation. We hide it on small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
                 <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
-                <a class="mdl-navigation__link" href="">Results</a>
+                <a class="mdl-navigation__link" href="@Url.Action("", "")">Results</a>
             </nav>
             <!-- Add spacer, to align navigation to the right -->
             <div class="mdl-layout-spacer"></div>
