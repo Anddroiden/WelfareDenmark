@@ -1,41 +1,56 @@
-var state = 'stopped';
-var startButton = document.getElementById("startButton");
-startButton.addEventListener("click", onStartClick);
-var startTime;
-var timeElapsed;
-
-function start() {
-    state = 'stopped';
-    setTimeout(waitToReady, 3000);
-}
-function end() {
-    state = 'stopped'
-}
-
-function react() {
-    state = 'stopped'
-    timeElapsed = new Date() - startTime;
-    document.getElementById("timeDisplay").innerHTML = timeElapsed;
-}
-
-function waitToReady() {
-    state = 'ready';
-    startTime = new Date();
-
-}
-
-function onStartClick() {
-    if (state === 'stopped') {
-        start();
+(function () {
+    
+    /** @type string*/ 
+    var state = 'stopped';
+    
+    /** @type Date*/ 
+    var startTime;
+    
+    /** @type Date*/ 
+    var timeElapsed;
+    
+    /** @type HTMLElement*/
+    var timeDisplay = document.getElementById("timeDisplay");
+    
+    /** @type HTMLElement*/
+    var startButton = document.getElementById("startButton");
+    
+    startButton.addEventListener("click", onStartClick);
+    
+    function start() {
+        state = 'waiting';
+        setTimeout(waitToReady, 3000);
     }
 
-    if (state === 'waiting') {
-        end();
-        alert("you clicked too early")
+    function end() {
+        state = 'stopped';
     }
 
-    if (state === 'ready') {
-        react();
+    function react() {
+        state = 'stopped';
+        timeElapsed = new Date() - startTime;
+        timeDisplay.innerHTML = 'Your reaction time was ' + timeElapsed;
     }
-}
+
+    function waitToReady() {
+        state = 'ready';
+        startTime = new Date();
+    }
+
+    function onStartClick() {
+        if (state === 'stopped') {
+            start();
+        }
+
+        if (state === 'waiting') {
+            end();
+            console.log("you clicked too early");
+
+        }
+
+        if (state === 'ready') {
+            react();
+        }
+    }
+})();
 
