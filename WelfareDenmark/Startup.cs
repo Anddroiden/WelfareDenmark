@@ -39,7 +39,7 @@ namespace WelfareDenmark
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<IdentityOptions>(options =>
@@ -59,7 +59,7 @@ namespace WelfareDenmark
 
                 // User settings.
                 options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzæøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ0123456789$-._@+";
+                "abcdefghijklmnopqrstuvwxyzï¿½ï¿½ï¿½ABCDEFGHIJKLMNOPQRSTUVWXYZï¿½ï¿½ï¿½0123456789$-._@+";
                 options.User.RequireUniqueEmail = false;
             });
 

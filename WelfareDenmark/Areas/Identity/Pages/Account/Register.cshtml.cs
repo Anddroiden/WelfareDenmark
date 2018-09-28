@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -19,17 +20,21 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -66,10 +71,34 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                IdentityResult IR = null;
+                var user_ = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 
-                var result = await _userManager.CreateAsync(user, Input.Password);
-                
+                var result = await _userManager.CreateAsync(user_, Input.Password);
+                var uid = user_.Id;
+                var role = "Administrator";
+                _logger.LogCritical(_roleManager.ToString());
+                if (_roleManager == null)
+                {
+                    throw new Exception("roleManager null");
+                }
+
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    IR = await _roleManager.CreateAsync(new IdentityRole(role));
+                    _logger.LogCritical(IR.Succeeded.ToString());
+                }
+
+                var userManager = _userManager;
+
+                var user = await userManager.FindByIdAsync(uid);
+                _logger.LogCritical(user.Id);
+
+                IR = await userManager.AddToRoleAsync(user, role);
+                _logger.LogCritical(IR.Succeeded.ToString());
+                var roles = await userManager.GetRolesAsync(user);
+                _logger.LogCritical(roles.First().ToString());
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
