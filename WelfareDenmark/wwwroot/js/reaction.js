@@ -3,19 +3,19 @@
         stopped: "stopped",
         waiting: "waiting",
         ready: "ready"
-    }
-    /** @type string*/ 
+    };
+    /** @type string*/
     var state;
-    
-    /** @type Date*/ 
+
+    /** @type Date*/
     var startTime;
-    
-    /** @type Date*/ 
+
+    /** @type Date*/
     var timeElapsed;
-    
+
     /** @type HTMLElement*/
     var timeDisplay = document.getElementById("timeDisplay");
-    
+
     /** @type HTMLElement*/
     var startButton = document.getElementById("startButton");
     var timeout;
@@ -23,9 +23,14 @@
     var results = [];
     changeState(stateTypes.stopped);
     startButton.addEventListener("click", onStartClick);
-    
-    function renderResults(){
-        var avgTimeElapsed = results.reduce((a,b)=>a+b)/results.length;
+
+    function renderResults() {
+        var avgTimeElapsed = results.reduce(add) / results.length;
+
+        function add(a, b) {
+            return a + b
+        }
+
         timeDisplay.innerHTML = '';
         var $li_ = document.createElement("li");
         $li_.innerHTML = 'Your average reaction time was ' + avgTimeElapsed + ' milliseconds';
@@ -35,10 +40,10 @@
             var $li = document.createElement("li");
             $li.innerHTML = 'Your reaction time was ' + timeElapsed + ' milliseconds';
             timeDisplay.appendChild($li);
-        }    
+        }
     }
 
-    function changeState(newState){
+    function changeState(newState) {
         state = newState;
         startButton.className = newState;
     }
@@ -58,8 +63,8 @@
         timeElapsed = new Date() - startTime;
         timeDisplay.innerHTML = 'Your reaction time was ' + timeElapsed + ' milliseconds';
         results.push(timeElapsed);
-        renderResults();        
-        if(iteration <= 3){
+        renderResults();
+        if (iteration <= 3) {
             start();
         } else {
             end();
@@ -83,8 +88,12 @@
             react();
         }
     }
+
+    /**
+     * @return {number}
+     */
     function RNG() {
-        return 2500+Math.random()*1000;
+        return 2500 + Math.random() * 1000;
     }
 
 })();
