@@ -7,6 +7,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
+    [Authorize(Policy = "IsPatient")]
     public class GamesController : Controller {
         private readonly ApplicationDbContext _db;
 
@@ -17,19 +18,13 @@ namespace WelfareDenmark.Controllers {
         public IActionResult Reaction() {
             return View();
         }
-
-        [Authorize(Policy = "CanCreatePatient")]
         public IActionResult Index() {
             return View();
         }
-
-        [Authorize(Policy = "IsPatient")]
         [HttpGet]
         public IActionResult DataEntry() {
             return View();
         }
-
-        [Authorize(Policy = "IsPatient")]
         [HttpPost]
         public IActionResult DataEntry(GameResultDTO dto) {
             if (!ModelState.IsValid) {
