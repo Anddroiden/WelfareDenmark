@@ -15,6 +15,7 @@ using WelfareDenmark.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WelfareDenmark.Models;
 
 namespace WelfareDenmark {
     public class Startup {
@@ -37,7 +38,7 @@ namespace WelfareDenmark {
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+            services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -94,14 +95,14 @@ namespace WelfareDenmark {
         }
         private async void CreateRoles(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             string email = "someone@somewhere.com";
 
-            IdentityUser testUser = await userManager.FindByEmailAsync(email);
+            ApplicationUser testUser = await userManager.FindByEmailAsync(email);
 
             if (testUser == null)
             {
-                IdentityUser administrator = new IdentityUser {Email = email, UserName = email};
+                ApplicationUser administrator = new ApplicationUser {Email = email, UserName = email};
 
                 IdentityResult newUser = await userManager.CreateAsync(administrator, "_AStrongP@ssword!");
 

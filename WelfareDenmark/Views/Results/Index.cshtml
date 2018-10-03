@@ -7,9 +7,8 @@
 
 
 <h2>Results</h2>
-@foreach (var result in Model)
-{
+@foreach (var result in Model) {
     <div>
-        @result.Score
+        @Html.RenderPartialAsync("_Result", result)
     </div>
 }
