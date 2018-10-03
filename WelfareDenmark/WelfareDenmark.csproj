@@ -15,4 +15,8 @@
     <_ContentIncludedByDefault Remove="Areas\Identity\Account\Register.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Account\Register.cshtml" />
+  </ItemGroup>
+
 </Project>
