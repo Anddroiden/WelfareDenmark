@@ -23,6 +23,7 @@
     var results = [];
     changeState(stateTypes.stopped);
     startButton.addEventListener("click", onStartClick);
+    init();
     
     function saveResult() {
         /** @type HTMLInputElement*/
@@ -83,6 +84,11 @@
         startTime = new Date();
     }
 
+    function init() {
+        iteration = 0;
+        results = [];
+    }
+
     function onStartClick() {
         if (state === stateTypes.stopped) {
             start();
@@ -90,6 +96,7 @@
         else if (state === stateTypes.waiting) {
             end();
             alert("you clicked too early");
+            init();
         }
         else if (state === stateTypes.ready) {
             react();
