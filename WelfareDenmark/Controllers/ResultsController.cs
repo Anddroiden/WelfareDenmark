@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +14,6 @@ namespace WelfareDenmark.Controllers {
         public ResultsController(ApplicationDbContext db) {
             _db = db;
         }
-        public IActionResult Index()
-        {
-            ViewData["Message"] = "Your application description page.";
 
         public IActionResult Index() {
             var gameResults = _db.Results.Include(r => r.BrainGame).Where(r => r.Player == User.Identity.Name);
