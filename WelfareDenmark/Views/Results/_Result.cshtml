@@ -1,3 +1,18 @@
 @model GameResult
 
-@Html.DisplayFor(g => g.Score)
+
+<div style="border: 1px solid #f5f5f5; border-radius: 4px; margin: 8px;">
+    <div>
+        @Html.DisplayNameFor(g => g.BrainGame.Name)
+        @Html.DisplayFor(g => g.BrainGame.Name)
+    </div>
+    <div>
+        @Html.DisplayNameFor(g => g.Score)
+        @Html.DisplayFor(g => g.Score)
+    </div>
+    <div>
+        @Html.DisplayNameFor(g => g.DateTime)
+        @Html.DisplayFor(g => g.DateTime)
+    </div>
+
+</div>

@@ -8,7 +8,5 @@
 
 <h2>Results</h2>
 @foreach (var result in Model) {
-    <div>
-        @Html.RenderPartialAsync("_Result", result)
-    </div>
+    await Html.RenderPartialAsync("_Result", result);
 }
