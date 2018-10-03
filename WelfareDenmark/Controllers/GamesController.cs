@@ -18,17 +18,18 @@ namespace WelfareDenmark.Controllers {
             return View();
         }
 
+        [Authorize(Policy = "CanCreatePatient")]
         public IActionResult Index() {
             return View();
         }
 
-        [Authorize(Policy = "Patient")]
+        [Authorize(Policy = "IsPatient")]
         [HttpGet]
         public IActionResult DataEntry() {
             return View();
         }
 
-        [Authorize(Policy = "Patient")]
+        [Authorize(Policy = "IsPatient")]
         [HttpPost]
         public IActionResult DataEntry(GameResultDTO dto) {
             if (!ModelState.IsValid) {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using WelfareDenmark.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace WelfareDenmark {
     public class Startup {
@@ -67,7 +69,7 @@ namespace WelfareDenmark {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -88,6 +90,27 @@ namespace WelfareDenmark {
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            CreateRoles(serviceProvider);
+        }
+        private async void CreateRoles(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string email = "someone@somewhere.com";
+
+            IdentityUser testUser = await userManager.FindByEmailAsync(email);
+
+            if (testUser == null)
+            {
+                IdentityUser administrator = new IdentityUser {Email = email, UserName = email};
+
+                IdentityResult newUser = await userManager.CreateAsync(administrator, "_AStrongP@ssword!");
+
+                if (newUser.Succeeded)
+                {
+                    await userManager.AddClaimAsync(administrator, new Claim("CanCreatePatient", "true"));
+                }
+            }
+
         }
     }
 }
