@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
@@ -15,8 +16,26 @@ namespace WelfareDenmark.Controllers {
             _db = db;
         }
 
+        [HttpGet]
         public IActionResult Reaction() {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Reaction(GameResult gameResult) {
+            var brainGame = _db.BrainGames.FirstOrDefault(bg => bg.Name == "Reaction");
+            if (brainGame is null) {
+                brainGame = new BrainGame {Name = "Reaction"};
+                _db.BrainGames.Add(brainGame);
+            }
+            var result = new GameResult {
+                BrainGame = brainGame,
+                Score = gameResult.Score,
+                Player = User.Identity.Name,
+                DateTime = DateTime.Now
+            };
+            brainGame.GameResults.Add(result);
+            _db.SaveChanges();
+            return RedirectToAction("GameResult", new {brainGameId = brainGame.Id, gameResultId = result.Id});
         }
         public IActionResult Index() {
             return View();

@@ -1,3 +1,4 @@
+@model GameResultDTO
 @{
     ViewBag.Title = "Reaction Game";
     Layout = "_Layout";
@@ -30,5 +31,12 @@
         </button>
         <div id="timeDisplay"></div>
     </div>
-    <script src="~/js/reaction.js" ></script>
+    <form asp-controller="Games" asp-action="Reaction" id="Form">
+        <input asp-for="Score" id="Score" hidden="true"/>
+    </form>
+
+
+
+<script src="~/js/reaction.js" ></script>
+
 

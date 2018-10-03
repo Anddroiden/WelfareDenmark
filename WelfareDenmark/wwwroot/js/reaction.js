@@ -23,14 +23,20 @@
     var results = [];
     changeState(stateTypes.stopped);
     startButton.addEventListener("click", onStartClick);
-
+    
+    function saveResult() {
+        /** @type HTMLInputElement*/
+        var $score = document.getElementById("Score");
+        /** @type HTMLFormElement*/
+        var $form = document.getElementById("Form");
+        $score.value = results.reduce(add) / results.length;
+        $form.submit();
+    }
+    function add(a, b) {
+        return a + b
+    }
     function renderResults() {
         var avgTimeElapsed = results.reduce(add) / results.length;
-
-        function add(a, b) {
-            return a + b
-        }
-
         timeDisplay.innerHTML = '';
         var $li_ = document.createElement("li");
         $li_.innerHTML = 'Your average reaction time was ' + avgTimeElapsed + ' milliseconds';
@@ -68,6 +74,7 @@
             start();
         } else {
             end();
+            saveResult();
         }
     }
 
