@@ -19,13 +19,6 @@ namespace WelfareDenmark.Models
         [Range(double.MinValue, double.MaxValue, ErrorMessage = "Please enter valid doubleNumber")]
         public double Score { get; set; }
 
-        [Display(Name = "Player Name")]
-        [DataType(DataType.Text)]
-        [Required]
-        [StringLength(100, MinimumLength = 1, ErrorMessage = "Your Name must be between 1 and 100 characters long")]
-        public string Player { get; set; }
-
-
 
 		[Display(Name = "Date and Time")]
         [Required]

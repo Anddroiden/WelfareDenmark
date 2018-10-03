@@ -58,7 +58,7 @@ namespace WelfareDenmark.Controllers {
 
             var result = new GameResult {
                 Score = dto.Score,
-                Player = dto.Player,
+                Player = User.Identity.Name,
                 DateTime = dto.DateTime
             };
             brainGame.GameResults.Add(result);

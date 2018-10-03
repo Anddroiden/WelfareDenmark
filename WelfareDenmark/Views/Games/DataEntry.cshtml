@@ -12,34 +12,27 @@
     @using (Html.BeginForm()) {
         @Html.ValidationSummary()
         <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Name") == ModelValidationState.Invalid?"is-invalid":"")" >
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Name") == ModelValidationState.Invalid ? "is-invalid" : "")">
                 <label asp-for="Name" class="mdl-textfield__label"></label>
-                <input asp-for="Name" class = "mdl-textfield__input" />
+                <input asp-for="Name" class="mdl-textfield__input"/>
                 <span asp-validation-for="Name" class="mdl-textfield__error"></span>
             </div>
         </div>
         <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Score") == ModelValidationState.Invalid?"is-invalid":"")" >
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Score") == ModelValidationState.Invalid ? "is-invalid" : "")">
                 <label asp-for="Score" class="mdl-textfield__label"></label>
-                <input asp-for="Score" class = "mdl-textfield__input"  pattern="-?[0-9][0-9]*"/>
+                <input asp-for="Score" class="mdl-textfield__input" pattern="-?[0-9][0-9]*"/>
                 <span asp-validation-for="Score" class="mdl-textfield__error"></span>
             </div>
         </div>
-        <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Player") == ModelValidationState.Invalid?"is-invalid":"")" >
-                <label asp-for="Player" class="mdl-textfield__label"></label>
-                <input asp-for="Player" class = "mdl-textfield__input" />
-                <span asp-validation-for="Player" class="mdl-textfield__error"></span>
-            </div>
-        </div>
-            <div >
-                <label asp-for="DateTime" class=""></label>
-                <input asp-for="DateTime"  type="datetime-local" class = "" />
-                <span asp-validation-for="DateTime" class=""></span>
+        <div >
+            <label asp-for="DateTime" class=""></label>
+            <input asp-for="DateTime" type="datetime-local" class=""/>
+            <span asp-validation-for="DateTime" class=""></span>
 
-            </div>
-            <div>
-                <button class="mdl-button mdl-button--raised" type="submit">Submit Data </button>
-            </div>
+        </div>
+        <div>
+            <button class="mdl-button mdl-button--raised" type="submit">Submit Data </button>
+        </div>
     }
 </fieldset>
