@@ -24,7 +24,7 @@ namespace WelfareDenmark.Controllers
             var gameResults = _db.Results.Include(r=>r.BrainGame);
             return View(new[] {
                 new GameResult {
-                    BrainGame = new BrainGame(), 
+                    BrainGame = new BrainGame{Name = "Reaction"}, 
                     DateTime = new DateTime(),
                     Id = 3,
                     Player = "username is cool",
