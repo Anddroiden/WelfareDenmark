@@ -7,14 +7,9 @@ using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers
 {
-    public class PatientDataController : Controller
+    public class ResultsController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-        [Route("/results")]
-        public IActionResult Results()
         {
             ViewData["Message"] = "Your application description page.";
 

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<GameResult>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+
+
+<h2>Results</h2>
+@foreach (var result in Model)
+{
+    <div>
+        @result.Score
+    </div>
+}
