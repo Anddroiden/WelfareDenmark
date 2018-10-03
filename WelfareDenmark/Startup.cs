@@ -62,6 +62,7 @@ namespace WelfareDenmark {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthorization(options => {
                 options.AddPolicy("Patient",policy=>policy.RequireClaim("IsPatient","true"));
+                options.AddPolicy("CanCreatePatient",policy=>policy.RequireClaim("CanCreatePatient","true"));
             });
         }
 

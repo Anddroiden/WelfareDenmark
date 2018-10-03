@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace WelfareDenmark.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Policy = "CanCreatePatient")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -69,7 +69,6 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                IdentityResult IR = null;
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
