@@ -13,7 +13,7 @@ namespace WelfareDenmark.Controllers
     {
         private readonly ApplicationDbContext _db;
 
-        public PatientDataController(ApplicationDbContext db)
+        public ResultsController(ApplicationDbContext db)
         {
             _db = db;
         }
