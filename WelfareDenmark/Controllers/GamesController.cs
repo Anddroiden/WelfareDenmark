@@ -8,7 +8,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    [Authorize(Policy = "IsPatient")]
+//    [Authorize(Policy = "IsPatient")]
     public class GamesController : Controller {
         private readonly ApplicationDbContext _db;
 
