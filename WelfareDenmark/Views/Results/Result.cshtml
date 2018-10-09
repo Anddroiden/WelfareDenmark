@@ -1,0 +1,21 @@
+﻿@model GameResult
+
+@{
+    ViewBag.Title = "Result";
+    Layout = "_Layout";
+}
+
+
+<div class="mdl-card">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">@Model.BrainGame.Name</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        <strong>@Html.DisplayNameFor(g => g.Score)</strong>
+        @Html.DisplayFor(g => g.Score)
+    </div>
+    <div class="mdl-card__supporting-text">
+        <strong>@Html.DisplayNameFor(g => g.DateTime)</strong>
+        @Html.DisplayFor(g => g.DateTime)
+    </div>
+</div>

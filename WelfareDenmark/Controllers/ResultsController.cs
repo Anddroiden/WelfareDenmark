@@ -9,7 +9,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    [Authorize(Policy = "IsPatient")]
+//    [Authorize(Policy = "IsPatient")]
     public class ResultsController : Controller {
         private readonly ApplicationDbContext _db;
 
@@ -29,6 +29,14 @@ namespace WelfareDenmark.Controllers {
                 }
             };
             return View(gameResults);
+        }
+        [Route("Results/{gameResultId}")]
+        public IActionResult Result(long gameResultId) {
+            var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == gameResultId);
+            if (gameResult is null) {
+                return NotFound();
+            }
+            return View(gameResult);
         }
     }
 }
