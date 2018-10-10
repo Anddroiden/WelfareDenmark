@@ -30,9 +30,8 @@ namespace WelfareDenmark.Controllers {
             };
             return View(gameResults);
         }
-        [Route("Results/{gameResultId}")]
-        public IActionResult Result(long gameResultId) {
-            var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == gameResultId);
+        public IActionResult Details(long id) {
+            var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == id);
             if (gameResult is null) {
                 return NotFound();
             }

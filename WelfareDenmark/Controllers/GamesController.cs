@@ -35,7 +35,7 @@ namespace WelfareDenmark.Controllers {
             };
             brainGame.GameResults.Add(result);
             _db.SaveChanges();
-            return RedirectToAction("GameResult", new {brainGameId = brainGame.Id, gameResultId = result.Id});
+            return RedirectToAction("Details","Results", new {id = result.Id});
         }
         public IActionResult Index() {
             return View();
@@ -63,7 +63,7 @@ namespace WelfareDenmark.Controllers {
             };
             brainGame.GameResults.Add(result);
             _db.SaveChanges();
-            return RedirectToAction("GameResult", new {brainGameId = brainGame.Id, gameResultId = result.Id});
+            return RedirectToAction("Details","Results", new {id = result.Id});
         }
 
         [Route("game-result/{brainGameId}/{gameResultId}")]
