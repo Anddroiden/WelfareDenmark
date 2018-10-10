@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BrainGame>
+﻿@using WelfareDenmark.Converters
+@model IEnumerable<BrainGame>
 
 @{
     ViewBag.Title = "Index";
@@ -7,11 +8,51 @@
 
 
 <h2>Results</h2>
-@foreach (var game in Model) {
-    <h3>@game.Name</h3>
-    <div style="display: flex; flex-direction: row">
-        @foreach (var result in game.GameResults) {
-            await Html.RenderPartialAsync("_Result", result);
-        }
-    </div>
-}
+<div id="cont"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var games = @(JavaScriptConvert.SerializeObject(Model));
+    for (var i = 0; i < games.length; i++) {
+        drawChart(games[i]);
+    }
+
+    function drawChart(game) {
+        var dt = game.gameResults;
+        var cnv = $('<canvas height="50"></canvas>');
+        $("#cont").append($('<h6>' + game.name + '</h6>'));
+        $("#cont").append(cnv);
+        var c = cnv[0];
+        console.log(c);
+        var ctx = c.getContext('2d');
+        var myChart = new Chart(ctx,
+            {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            data: dt.map(function(r) {
+                                return ({
+                                    x: r.dateTime,
+                                    y: r.score
+                                });
+                            })
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        xAxes: [
+                            { type: 'time' }
+                        ]
+                    },
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    }
+                }
+            });
+    }
+</script>
