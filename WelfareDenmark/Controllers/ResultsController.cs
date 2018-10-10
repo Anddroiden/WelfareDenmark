@@ -28,13 +28,22 @@ namespace WelfareDenmark.Controllers {
                     Score = 5867
                 }
             };
-            return View(gameResults);
+            var games = _db.BrainGames.Include(b => b.GameResults);
+            var filteredResults = games.Select(b => new BrainGame {
+                GameResults = b.GameResults.Where(r => r.Player == User.Identity.Name).ToArray(),
+                Name = b.Name,
+                Id = b.Id
+            });
+            var brainGames = filteredResults.Where(b=>b.GameResults.Any()).ToArray();
+            return View(brainGames);
         }
+
         public IActionResult Details(long id) {
             var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == id);
             if (gameResult is null) {
                 return NotFound();
             }
+
             return View(gameResult);
         }
     }
