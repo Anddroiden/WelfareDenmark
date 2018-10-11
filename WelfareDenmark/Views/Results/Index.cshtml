@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GameResult>
+﻿@model IEnumerable<BrainGame>
 
 @{
     ViewBag.Title = "Index";
@@ -7,6 +7,11 @@
 
 
 <h2>Results</h2>
-@foreach (var result in Model) {
-    await Html.RenderPartialAsync("_Result", result);
+@foreach (var game in Model) {
+    <h3>@game.Name</h3>
+    <div style="display: flex; flex-direction: row">
+        @foreach (var result in game.GameResults) {
+            await Html.RenderPartialAsync("_Result", result);
+        }
+    </div>
 }

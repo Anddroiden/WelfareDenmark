@@ -34,7 +34,7 @@ namespace WelfareDenmark {
             });
 
             services.AddDbContext<ApplicationDbContext>(options => {
-                options.UseInMemoryDatabase("Default");
+                options.UseSqlite("Data Source=app.db");
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -67,6 +67,7 @@ namespace WelfareDenmark {
                 options.AddPolicy("IsPatient",policy=>policy.RequireClaim("IsPatient","true"));
                 options.AddPolicy("CanCreatePatient",policy=>policy.RequireClaim("CanCreatePatient","true"));
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,7 +85,6 @@ namespace WelfareDenmark {
 //            app.UseCookiePolicy();
 
             app.UseAuthentication();
-
 
             app.UseMvc(routes => {
                 routes.MapRoute(

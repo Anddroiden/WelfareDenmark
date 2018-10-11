@@ -14,5 +14,6 @@ namespace WelfareDenmark.Models
         public BrainGame() {
             GameResults = new HashSet<GameResult>();
         }
+
     }
 }
