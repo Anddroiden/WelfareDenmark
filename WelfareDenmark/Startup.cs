@@ -48,7 +48,7 @@ namespace WelfareDenmark {
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 1;
+                options.Password.RequiredLength = 3;
                 options.Password.RequiredUniqueChars = 1;
 
                 // Lockout settings.
