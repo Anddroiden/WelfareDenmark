@@ -49,7 +49,7 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)] //password length
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -58,6 +58,13 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            // usertype property?
+            [Required]
+            [Display(Name = "UserType")]
+            public string UserType { get; set; }
+
+
         }
 
         public void OnGet(string returnUrl = null)

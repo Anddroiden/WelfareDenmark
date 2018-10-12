@@ -27,6 +27,14 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div> <!-- div for user type select  check register.cshtml.cs for more-->
+                <select>
+                    <option value="User">User</option>
+                    <option value="Consulent">Consulent</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <input asp-for="Input.UserType" class="form-control" />
+            </div>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>
