@@ -7,9 +7,7 @@
 
 @if (SignInManager.IsSignedIn(User)) {
 
-    if((await AuthorizationService.AuthorizeAsync(User,"CanCreatePatient")).Succeeded){
-        <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    }
+    
     <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})" method="post" id="logoutForm" class="navbar-right">
         <a class="mdl-navigation__link" onclick="document.getElementById('logoutForm').submit();" href="javascript:{}">Logout</a>

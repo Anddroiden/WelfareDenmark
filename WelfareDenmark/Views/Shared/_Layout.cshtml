@@ -20,31 +20,7 @@
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--no-desktop-drawer-button">
-    <header class="mdl-layout__header mdl-layout__header--waterfall">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title"><a class="mdl-navigation__link" href="@Url.Action("Index", "Home")">Title</a></span>
-            <!-- Left Navigation. We hide it on small screens. -->
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
-                <a class="mdl-navigation__link" href="@Url.Action("Index", "Results")">Results</a>
-            </nav>
-            <!-- Add spacer, to align navigation to the right -->
-            <div class="mdl-layout-spacer"></div>
-            <!-- Right Navigation. We hide it on small screens. -->
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <partial name="_LoginPartial"/>
-            </nav>
-        </div>
-    </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Games</a>
-            <a class="mdl-navigation__link" href="">Results</a>
-            <a class="mdl-navigation__link" href="">Logout</a>
-        </nav>
-    </div>
+    <partial name="_Navigation"/>
     <div class="mdl-layout__content">
         @RenderBody()
     </div>

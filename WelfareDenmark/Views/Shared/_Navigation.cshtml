@@ -1,0 +1,49 @@
+@using Microsoft.AspNetCore.Authorization
+@model object
+
+@inject IAuthorizationService authorizationService
+
+<header class="mdl-layout__header mdl-layout__header--waterfall">
+    <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
+
+        <!-- Left Navigation. We hide it on small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
+                <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
+                <a class="mdl-navigation__link" href="@Url.Action("Index", "Results")">Results</a>
+            }
+            @if ((await authorizationService.AuthorizeAsync(User, "CanCreatePatient")).Succeeded) {
+                <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            }
+        </nav>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Right Navigation. We hide it on small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <partial name="_LoginPartial"/>
+        </nav>
+    </div>
+</header>
+<div class="mdl-layout__drawer">
+    <!-- Title -->
+    <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
+
+    <!-- Top Navigation. -->
+    <nav class="mdl-navigation">
+        @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "Results")">Results</a>
+        }
+        @if ((await authorizationService.AuthorizeAsync(User, "CanCreatePatient")).Succeeded) {
+            <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        }
+    </nav>
+    <!-- Add spacer, to align navigation to the bottom -->
+    <div class="mdl-layout-spacer"></div>
+    <!-- bottom Navigation. -->
+    <nav class="mdl-navigation">
+        <partial name="_LoginPartial"/>
+    </nav>
+</div>
