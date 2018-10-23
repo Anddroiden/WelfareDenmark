@@ -15,7 +15,7 @@ namespace WelfareDenmark.Controllers
         {
             return View();
         }
-        [Route("/about")]
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

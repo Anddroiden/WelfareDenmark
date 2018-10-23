@@ -8,7 +8,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-//    [Authorize(Policy = "IsPatient")]
+    [Authorize(Policy = "IsPatient")]
     public class GamesController : Controller {
         private readonly ApplicationDbContext _db;
 
@@ -64,21 +64,6 @@ namespace WelfareDenmark.Controllers {
             brainGame.GameResults.Add(result);
             _db.SaveChanges();
             return RedirectToAction("Details","Results", new {id = result.Id});
-        }
-
-        [Route("game-result/{brainGameId}/{gameResultId}")]
-        public IActionResult GameResult(long brainGameId, long gameResultId) {
-            var brainGame = _db.BrainGames.Include(b => b.GameResults).FirstOrDefault(b => b.Id == brainGameId);
-            var gameResult = brainGame?.GameResults?.FirstOrDefault(r => r.Id == gameResultId);
-            if (gameResult is null) {
-                return NotFound();
-            }
-
-            var dto = new GameResultDTO {
-                Name = brainGame.Name,
-                Score = gameResult.Score
-            };
-            return View(dto);
         }
     }
 }

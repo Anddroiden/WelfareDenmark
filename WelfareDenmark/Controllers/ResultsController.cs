@@ -9,7 +9,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-//    [Authorize(Policy = "IsPatient")]
+    [Authorize(Policy = "IsPatient")]
     public class ResultsController : Controller {
         private readonly ApplicationDbContext _db;
 
@@ -18,16 +18,6 @@ namespace WelfareDenmark.Controllers {
         }
 
         public IActionResult Index() {
-            var gameResults = _db.Results.Include(r => r.BrainGame).Where(r => r.Player == User.Identity.Name);
-            var results = new[] {
-                new GameResult {
-                    BrainGame = new BrainGame {Name = "Reaction"},
-                    DateTime = new DateTime(),
-                    Id = 3,
-                    Player = "username is cool",
-                    Score = 5867
-                }
-            };
             var games = _db.BrainGames.Include(b => b.GameResults);
             var filteredResults = games.Select(b => new BrainGame {
                 GameResults = b.GameResults.Where(r => r.Player == User.Identity.Name).ToArray(),
@@ -35,6 +25,7 @@ namespace WelfareDenmark.Controllers {
                 Id = b.Id
             });
             var brainGames = filteredResults.Where(b=>b.GameResults.Any()).ToArray();
+            //todo: make it so that when you click on a result on the graph, you are taken to the details page
             return View(brainGames);
         }
 
