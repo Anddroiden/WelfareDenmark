@@ -26,6 +26,17 @@
     </div>
 </div>
 @RenderSection("Scripts", required: false)
+<script>
+    // Getting only the links that are in .navigation
+   
+    var links = document.querySelectorAll('.mdl-navigation > a[href="'+window.location.pathname+'"]');
+    console.log(window.location.pathname);
+    links.forEach((link) => {
+        console.log(link);
+
+        link.classList.add("mdl-navigation__link--current");
+    });
+</script>
 <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 </html>

@@ -1,7 +1,14 @@
-﻿.data-entry-grid{
+﻿.data-entry-grid {
     display: grid;
     grid-template-columns: auto auto 1fr;
 }
+
 .data-entry-grid > label {
     margin-right: 8px;
+}
+
+a.mdl-navigation__link.mdl-navigation__link--current {
+    border-bottom: 2px solid #fff;
+    box-sizing: border-box;
+    height: 64px;
 }

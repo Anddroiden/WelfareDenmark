@@ -3,11 +3,12 @@
 
 @inject IAuthorizationService authorizationService
 
-<header class="mdl-layout__header mdl-layout__header--waterfall">
+<header class="mdl-layout__header ">
     <div class="mdl-layout__header-row">
         <!-- Title -->
-        <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
-
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
+        </nav>
         <!-- Left Navigation. We hide it on small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
             @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
@@ -28,8 +29,9 @@
 </header>
 <div class="mdl-layout__drawer">
     <!-- Title -->
-    <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
-
+    <nav class="mdl-navigation">
+        <a class="mdl-navigation__link mdl-layout-title mdl-typography--title" href="@Url.Action("Index", "Home")">WelfareGames</a>
+    </nav>
     <!-- Top Navigation. -->
     <nav class="mdl-navigation">
         @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
