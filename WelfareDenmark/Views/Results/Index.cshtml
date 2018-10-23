@@ -34,7 +34,8 @@
                             data: dt.map(function(r) {
                                 return ({
                                     x: r.dateTime,
-                                    y: r.score
+                                    y: r.score,
+                                    id: r.id
                                 });
                             })
                         }
@@ -53,6 +54,14 @@
                         }
                     }
                 }
+            });
+        cnv.on('click',
+            function(e) {
+                var bars = myChart.getElementAtEvent(e);
+                if (bars.length === 0) return;
+                var gameResult = dt[bars[0]._datasetIndex];
+                window.location.href = "/Results/Details/"+gameResult.id;
+
             });
     }
 </script>

@@ -25,7 +25,6 @@ namespace WelfareDenmark.Controllers {
                 Id = b.Id
             });
             var brainGames = filteredResults.Where(b=>b.GameResults.Any()).ToArray();
-            //todo: make it so that when you click on a result on the graph, you are taken to the details page
             return View(brainGames);
         }
 
