@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -72,6 +74,10 @@ namespace WelfareDenmark {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
+            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -91,6 +97,7 @@ namespace WelfareDenmark {
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
             CreateRoles(serviceProvider);
         }
         private async void CreateRoles(IServiceProvider serviceProvider)
