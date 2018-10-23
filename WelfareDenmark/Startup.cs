@@ -74,10 +74,7 @@ namespace WelfareDenmark {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider) {
-            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
-
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            UseAmericanCultureInfo();
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -100,6 +97,14 @@ namespace WelfareDenmark {
             
             CreateRoles(serviceProvider);
         }
+
+        private static void UseAmericanCultureInfo() {
+            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        }
+
         private async void CreateRoles(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
