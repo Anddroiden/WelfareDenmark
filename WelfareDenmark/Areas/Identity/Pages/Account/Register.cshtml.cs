@@ -60,9 +60,9 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             // usertype property?
-            [Required]
-            [Display(Name = "UserType")]
-            public string UserType { get; set; }
+            //[Required]
+            //[Display(Name = "UserType")]
+            //public string UserType { get; set; }
 
 
         }
