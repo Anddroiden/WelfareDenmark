@@ -31,7 +31,7 @@
         /** @type HTMLFormElement*/
         var $form = document.getElementById("Form");
         $score.value = results.reduce(add) / results.length;
-        //$form.submit();
+        $form.submit();
     }
     function add(a, b) {
         return a + b
