@@ -81,11 +81,11 @@ namespace WelfareDenmark {
             }
             else {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+//                app.UseHsts();
             }
-            app.UseHttpsRedirection();
+//            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+//            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
@@ -108,15 +108,15 @@ namespace WelfareDenmark {
         private async void CreateRoles(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var email = "someone@somewhere.com";
+            string email = "someone@somewhere.com";
 
-            var testUser = await userManager.FindByEmailAsync(email);
+            ApplicationUser testUser = await userManager.FindByEmailAsync(email);
 
             if (testUser == null)
             {
-                var administrator = new ApplicationUser{Email = email, UserName = email};
+                ApplicationUser administrator = new ApplicationUser {Email = email, UserName = email};
 
-                var newUser = await userManager.CreateAsync(administrator, "_AStrongP@ssword!");
+                IdentityResult newUser = await userManager.CreateAsync(administrator, "_AStrongP@ssword!");
 
                 if (newUser.Succeeded)
                 {
