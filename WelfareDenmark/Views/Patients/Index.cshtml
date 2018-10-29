@@ -1,0 +1,12 @@
+@model System.Collections.Generic.ICollection<WelfareDenmark.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>titled</h2>
+@foreach (var t in Model) {
+    
+    <div>d @t.Email</div>
+}
