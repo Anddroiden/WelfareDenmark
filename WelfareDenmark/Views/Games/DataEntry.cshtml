@@ -10,7 +10,6 @@
 <fieldset>
 
     @using (Html.BeginForm()) {
-        @Html.ValidationSummary()
         <div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Name") == ModelValidationState.Invalid ? "is-invalid" : "")">
                 <label asp-for="Name" class="mdl-textfield__label"></label>
@@ -36,3 +35,18 @@
         </div>
     }
 </fieldset>
+@section scripts
+{  
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script language="javascript">
+        $.validator.setDefaults({
+            highlight: function(element) {
+                $(element).closest('.mdl-textfield').addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).closest('.mdl-textfield').removeClass('is-invalid');
+            }
+        });
+    </script>
+    
+}
