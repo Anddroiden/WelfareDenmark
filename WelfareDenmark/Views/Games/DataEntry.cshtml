@@ -1,5 +1,4 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using Microsoft.AspNetCore.Mvc.ModelBinding
 @model GameResultDTO
 @{
     ViewBag.Title = "Your data";
@@ -10,16 +9,15 @@
 <fieldset>
 
     @using (Html.BeginForm()) {
-        @Html.ValidationSummary()
         <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Name") == ModelValidationState.Invalid ? "is-invalid" : "")">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label asp-for="Name" class="mdl-textfield__label"></label>
                 <input asp-for="Name" class="mdl-textfield__input"/>
                 <span asp-validation-for="Name" class="mdl-textfield__error"></span>
             </div>
         </div>
         <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label @(ViewData.ModelState.GetValidationState("Score") == ModelValidationState.Invalid ? "is-invalid" : "")">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label asp-for="Score" class="mdl-textfield__label"></label>
                 <input asp-for="Score" class="mdl-textfield__input" pattern="-?[0-9][0-9]*"/>
                 <span asp-validation-for="Score" class="mdl-textfield__error"></span>
@@ -36,3 +34,18 @@
         </div>
     }
 </fieldset>
+@section scripts
+{  
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script language="javascript">
+        $.validator.setDefaults({
+            highlight: function(element) {
+                $(element).closest('.mdl-textfield').addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).closest('.mdl-textfield').removeClass('is-invalid');
+            }
+        });
+    </script>
+    
+}
