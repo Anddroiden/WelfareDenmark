@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
+    [Authorize(Policy = "CanCreatePatient")]
     public class Patients : Controller {
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
