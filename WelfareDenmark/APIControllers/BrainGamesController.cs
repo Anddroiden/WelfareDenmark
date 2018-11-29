@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -37,28 +37,6 @@ namespace WelfareDenmark.APIControllers {
             if (brainGame == null) return NotFound();
 
             return Ok(brainGame);
-        }
-
-        /* todo: delete this?*/
-        // PUT: api/BrainGames/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrainGame([FromRoute] long id, [FromBody] BrainGame brainGame) {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            if (id != brainGame.Id) return BadRequest();
-
-            _context.Entry(brainGame).State = EntityState.Modified;
-
-            try {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) {
-                if (!BrainGameExists(id))
-                    return NotFound();
-                throw;
-            }
-
-            return NoContent();
         }
 
         // POST: api/BrainGames
