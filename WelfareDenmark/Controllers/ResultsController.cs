@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +21,13 @@ namespace WelfareDenmark.Controllers {
                 Name = b.Name,
                 Id = b.Id
             });
-            var brainGames = filteredResults.Where(b=>b.GameResults.Any()).ToArray();
+            var brainGames = filteredResults.Where(b => b.GameResults.Any()).ToArray();
             return View(brainGames);
         }
 
         public IActionResult Details(long id) {
             var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == id);
-            if (gameResult is null) {
-                return NotFound();
-            }
+            if (gameResult is null) return NotFound();
 
             return View(gameResult);
         }

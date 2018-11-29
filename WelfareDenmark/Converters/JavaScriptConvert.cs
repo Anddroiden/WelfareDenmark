@@ -4,15 +4,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace WelfareDenmark.Converters {
-    public static class JavaScriptConvert
-    {
-        public static HtmlString SerializeObject(object value)
-        {
+    public static class JavaScriptConvert {
+        public static HtmlString SerializeObject(object value) {
             using (var stringWriter = new StringWriter())
-            using (var jsonWriter = new JsonTextWriter(stringWriter))
-            {
-                var serializer = new JsonSerializer
-                {
+            using (var jsonWriter = new JsonTextWriter(stringWriter)) {
+                var serializer = new JsonSerializer {
                     // Let's use camelCasing as is common practice in JavaScript
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };

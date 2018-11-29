@@ -1,4 +1,4 @@
-@model System.Collections.Generic.ICollection<WelfareDenmark.Models.ApplicationUser>
+@model ICollection<ApplicationUser>
 
 @{
     ViewBag.Title = "title";
@@ -7,6 +7,5 @@
 
 <h2>titled</h2>
 @foreach (var t in Model) {
-    
     <div>d @t.Email</div>
 }

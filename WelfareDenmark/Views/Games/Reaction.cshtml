@@ -4,39 +4,29 @@
     Layout = "_Layout";
 }
 <style>
-.stopped{
-    background: #DF0C0C;
-}
-.stopped::before{
-    content: "start";
-}
-.waiting{
-    background: yellow;
-}
-.waiting::before{
-    content: "get ready";
-}
-.ready{
-    background: green;
-}
-.ready::before{
-    content: "click!!!";
-}
+    .stopped { background: #DF0C0C; }
+
+    .stopped::before { content: "start"; }
+
+    .waiting { background: yellow; }
+
+    .waiting::before { content: "get ready"; }
+
+    .ready { background: green; }
+
+    .ready::before { content: "click!!!"; }
 
 </style>
 <h2>Reaction Game</h2>
 
-    <div>
-        <button id="startButton" value="start" style="width: 400px; height: 400px; position:absolute; top: 40%; left: 35%; font-size : 100px; ">
-        </button>
-        <div id="timeDisplay"></div>
-    </div>
-    <form asp-controller="Games" asp-action="Reaction" id="Form">
-        <input asp-for="Score" id="Score" hidden="true"/>
-    </form>
+<div>
+    <button id="startButton" value="start" style="font-size: 100px; height: 400px; left: 35%; position: absolute; top: 40%; width: 400px;">
+    </button>
+    <div id="timeDisplay"></div>
+</div>
+<form asp-controller="Games" asp-action="Reaction" id="Form">
+    <input asp-for="Score" id="Score" hidden="true"/>
+</form>
 
 
-
-<script src="~/js/reaction.js" ></script>
-
-
+<script src="~/js/reaction.js"></script>

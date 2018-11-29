@@ -7,7 +7,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    public class Patients: Controller {
+    public class Patients : Controller {
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -15,10 +15,11 @@ namespace WelfareDenmark.Controllers {
             _dbContext = dbContext;
             _userManager = userManager;
         }
+
         public async Task<ViewResult> Index() {
             var user = await _userManager.GetUserAsync(User);
 
-            var applicationUser = _dbContext.Users.Include(t=>t.Patients).First(u=>u.Id == user.Id);
+            var applicationUser = _dbContext.Users.Include(t => t.Patients).First(u => u.Id == user.Id);
             return View(applicationUser.Patients);
         }
     }

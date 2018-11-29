@@ -56,7 +56,7 @@
     }
 
     function start() {
-        changeState(stateTypes.waiting)
+        changeState(stateTypes.waiting);
         timeout = setTimeout(waitToReady, RNG());
     }
 

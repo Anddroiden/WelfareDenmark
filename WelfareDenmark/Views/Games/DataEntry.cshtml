@@ -34,8 +34,9 @@
         </div>
     }
 </fieldset>
+
 @section scripts
-{  
+{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script language="javascript">
         $.validator.setDefaults({
@@ -47,5 +48,5 @@
             }
         });
     </script>
-    
+
 }
