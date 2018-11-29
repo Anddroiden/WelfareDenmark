@@ -8,30 +8,23 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Areas.Identity.Pages.Account {
     [Authorize(Policy = "CanCreatePatient")]
     public class RegisterModel : PageModel {
-        private readonly ApplicationDbContext _dbContext;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            ApplicationDbContext dbContext
+            IEmailSender emailSender
         ) {
             _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _dbContext = dbContext;
         }
 
         [BindProperty] public InputModel Input { get; set; }
