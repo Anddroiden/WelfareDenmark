@@ -28,6 +28,7 @@ namespace WelfareDenmark.Controllers {
         public IActionResult Details(long id) {
             var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == id);
             if (gameResult is null) return NotFound();
+            if (gameResult.Player != User.Identity.Name) return Unauthorized();
 
             return View(gameResult);
         }
