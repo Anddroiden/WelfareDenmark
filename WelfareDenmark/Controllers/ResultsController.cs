@@ -6,7 +6,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    [Authorize(Policy = "IsPatient")]
+    [Authorize(Policy = PolicyConstants.IsPatient)]
     public class ResultsController : Controller {
         private readonly ApplicationDbContext _db;
 

@@ -61,8 +61,8 @@ namespace WelfareDenmark {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthorization(options => {
-                options.AddPolicy("IsPatient", policy => policy.RequireClaim("IsPatient", "true"));
-                options.AddPolicy("CanCreatePatient", policy => policy.RequireClaim("CanCreatePatient", "true"));
+                options.AddPolicy(PolicyConstants.IsPatient, policy => policy.RequireClaim(PolicyConstants.IsPatient, "true"));
+                options.AddPolicy(PolicyConstants.CanCreatePatient, policy => policy.RequireClaim(PolicyConstants.CanCreatePatient, "true"));
             });
         }
 
@@ -113,7 +113,7 @@ namespace WelfareDenmark {
                 var newUser = await userManager.CreateAsync(administrator, "_AStrongP@ssword!");
 
                 if (newUser.Succeeded)
-                    await userManager.AddClaimAsync(administrator, new Claim("CanCreatePatient", "true"));
+                    await userManager.AddClaimAsync(administrator, new Claim(PolicyConstants.CanCreatePatient, "true"));
             }
         }
     }

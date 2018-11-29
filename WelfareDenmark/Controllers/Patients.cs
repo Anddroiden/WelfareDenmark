@@ -8,7 +8,7 @@ using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    [Authorize(Policy = "CanCreatePatient")]
+    [Authorize(Policy = PolicyConstants.CanCreatePatient)]
     public class Patients : Controller {
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;

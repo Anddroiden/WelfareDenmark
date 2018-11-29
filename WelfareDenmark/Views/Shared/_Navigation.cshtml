@@ -11,11 +11,11 @@
         </nav>
         <!-- Left Navigation. We hide it on small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-            @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
+            @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.IsPatient)).Succeeded) {
                 <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
                 <a class="mdl-navigation__link" href="@Url.Action("Index", "Results")">Results</a>
             }
-            @if ((await authorizationService.AuthorizeAsync(User, "CanCreatePatient")).Succeeded) {
+            @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.CanCreatePatient)).Succeeded) {
                 <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
             }
         </nav>
@@ -34,11 +34,11 @@
     </nav>
     <!-- Top Navigation. -->
     <nav class="mdl-navigation">
-        @if ((await authorizationService.AuthorizeAsync(User, "IsPatient")).Succeeded) {
+        @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.IsPatient)).Succeeded) {
             <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")">Games</a>
             <a class="mdl-navigation__link" href="@Url.Action("Index", "Results")">Results</a>
         }
-        @if ((await authorizationService.AuthorizeAsync(User, "CanCreatePatient")).Succeeded) {
+        @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.CanCreatePatient)).Succeeded) {
             <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
         }
     </nav>
