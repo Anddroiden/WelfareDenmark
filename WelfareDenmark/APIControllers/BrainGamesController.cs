@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +25,6 @@ namespace WelfareDenmark.APIControllers {
         // GET: api/BrainGames/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBrainGame([FromRoute] long id) {
-            /* Why do we need this?
-             From ms docs
-             When ModelState.IsValid evaluates to false in web API controllers using the [ApiController] attribute, 
-             an automatic HTTP 400 response containing issue details is returned. For more information.
-             */
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var brainGame = await _context.BrainGames.FindAsync(id);
 
@@ -42,7 +36,6 @@ namespace WelfareDenmark.APIControllers {
         // POST: api/BrainGames
         [HttpPost]
         public async Task<IActionResult> PostBrainGame([FromBody] BrainGame brainGame) {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             _context.BrainGames.Add(brainGame);
             await _context.SaveChangesAsync();
@@ -53,7 +46,6 @@ namespace WelfareDenmark.APIControllers {
         // DELETE: api/BrainGames/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrainGame([FromRoute] long id) {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var brainGame = await _context.BrainGames.FindAsync(id);
             if (brainGame == null) return NotFound();
