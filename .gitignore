@@ -262,3 +262,5 @@ __pycache__/
 \.vscode/
 
 WelfareDenmark/app\.db
+
+WelfareDenmark/appsettings\.json
