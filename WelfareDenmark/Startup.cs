@@ -1,7 +1,11 @@
 using System;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
@@ -35,10 +40,12 @@ namespace WelfareDenmark {
 //                options.UseSqlServer(
 //                    Configuration.GetConnectionString("DefaultConnection"));
             });
+//            services.AddIdentity<ApplicationUser, IdentityRole>()
+//                .AddEntityFrameworkStores<ApplicationDbContext>()
+//                .AddDefaultTokenProviders();
             services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
             services.Configure<IdentityOptions>(options => {
                 // Password settings.
                 options.Password.RequireDigit = false;
@@ -60,11 +67,27 @@ namespace WelfareDenmark {
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.JwtKey);
             services.AddAuthorization(options => {
                 options.AddPolicy(PolicyConstants.IsPatient,
                     policy => policy.RequireClaim(PolicyConstants.IsPatient, "true"));
                 options.AddPolicy(PolicyConstants.CanCreatePatient,
                     policy => policy.RequireClaim(PolicyConstants.CanCreatePatient, "true"));
+            });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            services.AddAuthentication().AddCookie().AddJwtBearer(x => {
+                x.TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 
@@ -84,9 +107,12 @@ namespace WelfareDenmark {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseAuthentication();
-
             app.UseMvc(routes => {
                 routes.MapRoute(
                     "default",
@@ -118,5 +144,11 @@ namespace WelfareDenmark {
                     await userManager.AddClaimAsync(administrator, new Claim(PolicyConstants.CanCreatePatient, "true"));
             }
         }
+    }
+
+    public class AppSettings {
+        public string JwtKey { get; set; }
+        public double JwtExpireDays { get; set; }
+        public string JwtIssuer { get; set; }
     }
 }
