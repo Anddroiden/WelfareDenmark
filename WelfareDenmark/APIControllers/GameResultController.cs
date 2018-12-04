@@ -1,12 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.APIControllers {
     [Route("api/Results")]
     [ApiController]
+    [Authorize(Policy = PolicyConstants.IsPatient, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GameResultController : ControllerBase {
         private readonly ApplicationDbContext _context;
 
@@ -28,8 +32,14 @@ namespace WelfareDenmark.APIControllers {
         // api/results
         [HttpGet]
         public IActionResult GetAllUsersGameResults() {
-            var gameResults = _context.Results.Where(result => result.Player == User.Identity.Name);
-            return Ok(gameResults);
+            var games = _context.BrainGames.Include(b => b.GameResults);
+            var filteredResults = games.Select(b => new BrainGame {
+                GameResults = b.GameResults.Where(r => r.Player == User.Identity.Name).ToArray(),
+                Name = b.Name,
+                Id = b.Id
+            });
+            var brainGames = filteredResults.Where(b => b.GameResults.Any()).ToArray();
+            return Ok(brainGames);
         }
 
         // api/results

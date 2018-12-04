@@ -13,18 +13,15 @@ using WelfareDenmark.Models;
 namespace WelfareDenmark.Areas.Identity.Pages.Account {
     [Authorize(Policy = PolicyConstants.CanCreatePatient)]
     public class RegisterModel : PageModel {
-        private readonly IEmailSender _emailSender;
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender
+            ILogger<RegisterModel> logger
         ) {
             _userManager = userManager;
             _logger = logger;
-            _emailSender = emailSender;
         }
 
         [BindProperty] public InputModel Input { get; set; }
@@ -47,15 +44,6 @@ namespace WelfareDenmark.Areas.Identity.Pages.Account {
                     var consultant = await _userManager.GetUserAsync(User);
                     consultant.Patients.Add(user);
                     await _userManager.UpdateAsync(consultant);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        null,
-                        new {userId = user.Id, code},
-                        Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     return LocalRedirect(returnUrl);
                 }
 
