@@ -19,6 +19,7 @@ namespace WelfareDenmark.Controllers {
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Reaction(GameResult gameResult) {
             if (!ModelState.IsValid) return View();
@@ -47,7 +48,8 @@ namespace WelfareDenmark.Controllers {
         public IActionResult DataEntry() {
             return View();
         }
-
+        
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult DataEntry(GameResultDTO dto) {
             if (!ModelState.IsValid) return View();
