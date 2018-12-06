@@ -264,3 +264,4 @@ __pycache__/
 WelfareDenmark/app\.db
 
 WelfareDenmark/appsettings\.json
+!/WelfareDenmark/appsettings.json
