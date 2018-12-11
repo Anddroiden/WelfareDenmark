@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿﻿using System.Net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,13 +11,16 @@ namespace WelfareDenmark {
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
             return WebHost.CreateDefaultBuilder(args)
+                
                 .UseKestrel(options => 
                 {
+                    
                     options.Listen(IPAddress.Any, 443, listenOptions =>
                     {
                         var configuration = (IConfiguration)options.ApplicationServices.GetService(typeof(IConfiguration));
-
-                        listenOptions.UseHttps("cert.pfx", configuration["certPassword"]);
+                        if (configuration["ASPNETCORE_ENVIRONMENT"] != "Development") {
+                            listenOptions.UseHttps("cert.pfx", configuration["certPassword"]);
+                        }
                     });
                 })
                 .UseStartup<Startup>();
