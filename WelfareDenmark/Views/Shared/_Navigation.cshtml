@@ -17,6 +17,7 @@
             }
             @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.CanCreatePatient)).Succeeded) {
                 <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                <a class="mdl-navigation__link" href="@Url.Action("Index", "Patients")">Patients</a>
             }
         </nav>
         <!-- Add spacer, to align navigation to the right -->
@@ -40,6 +41,7 @@
         }
         @if ((await authorizationService.AuthorizeAsync(User, PolicyConstants.CanCreatePatient)).Succeeded) {
             <a class="mdl-navigation__link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="mdl-navigation__link" href="@Url.Action("Index", "Patients")">Patients</a>
         }
     </nav>
     <!-- Add spacer, to align navigation to the bottom -->
