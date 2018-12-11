@@ -1,11 +1,11 @@
 @model ICollection<ApplicationUser>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "patients";
     Layout = "_Layout";
 }
-
-<h2>Patienter</h2>
 @foreach (var t in Model) {
-    <div>Patient email: @t.Email</div>
+    <div>
+        <a href="@($"users/{t.Id}/results")"> @t.Email</a>
+    </div>
 }
