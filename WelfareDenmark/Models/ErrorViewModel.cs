@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace WelfareDenmark.Models {
     public class ErrorViewModel {
 
-        [DisplayName("Request fejl: venligst prøv igen.")]
+        [DisplayName("Request Error: Please try again.")]
         public string RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);

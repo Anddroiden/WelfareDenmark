@@ -8,7 +8,7 @@ namespace WelfareDenmark.Models {
             Patients = new HashSet<ApplicationUser>();
         }
 
-        [DisplayName("Patienter:")]
+        [DisplayName("Patients:")]
         public virtual ICollection<ApplicationUser> Patients { get; set; }
     }
 }

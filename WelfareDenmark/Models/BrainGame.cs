@@ -8,14 +8,14 @@ namespace WelfareDenmark.Models {
             GameResults = new HashSet<GameResult>();
         }
 
-        [DisplayName("Resultat nummer:")]
+        [DisplayName("Result number:")]
         public long Id { get; set; }
 
         [Required]
-        [DisplayName("Navn på spil:")]
+        [DisplayName("Game name:")]
         public string Name { get; set; }
 
-        [DisplayName("Spil resultat:")]
+        [DisplayName("Games result:")]
         public ICollection<GameResult> GameResults { get; set; }
     }
 }
