@@ -1,17 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
 namespace WelfareDenmark.Controllers {
-    
     public class ResultsController : Controller {
         private readonly ApplicationDbContext _db;
 
@@ -22,13 +16,7 @@ namespace WelfareDenmark.Controllers {
         [Authorize(Policy = PolicyConstants.IsPatient)]
         [Route("[controller]")]
         public IActionResult Index() {
-            var games = _db.BrainGames.Include(b => b.GameResults);
-            var filteredResults = games.Select(b => new BrainGame {
-                GameResults = b.GameResults.Where(r => r.Player == User.Identity.Name).ToArray(),
-                Name = b.Name,
-                Id = b.Id
-            });
-            var brainGames = filteredResults.Where(b => b.GameResults.Any()).ToArray();
+            var brainGames = GetBrainGames(User.Identity.Name);
             return View(brainGames);
         }
 
@@ -46,22 +34,31 @@ namespace WelfareDenmark.Controllers {
         [Route("users/{id}/results")]
         public IActionResult Index(string id) {
             var user = _db.Users.Find(id);
-            
-            var loggedInUser = _db.Users.Include(applicationUser => applicationUser.Patients)
-                .First(au => au.UserName == User.Identity.Name);
-            
+
+            var loggedInUser = GetLoggedInUserWithPatients();
+
             if (loggedInUser.Patients.Any(p => p.Id == user.Id) == false) {
                 return Unauthorized();
             }
 
+            var brainGames = GetBrainGames(user.UserName);
+            return View(brainGames);
+        }
+
+        private BrainGame[] GetBrainGames(string username) {
             var games = _db.BrainGames.Include(b => b.GameResults);
             var filteredResults = games.Select(b => new BrainGame {
-                GameResults = b.GameResults.Where(r => r.Player == user.UserName).ToArray(),
+                GameResults = b.GameResults.Where(r => r.Player == username).ToArray(),
                 Name = b.Name,
                 Id = b.Id
             });
             var brainGames = filteredResults.Where(b => b.GameResults.Any()).ToArray();
-            return View(brainGames);
+            return brainGames;
+        }
+
+        private ApplicationUser GetLoggedInUserWithPatients() {
+            return _db.Users.Include(applicationUser => applicationUser.Patients)
+                .First(au => au.UserName == User.Identity.Name);
         }
     }
 }
