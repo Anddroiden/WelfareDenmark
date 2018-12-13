@@ -44,7 +44,7 @@ namespace WelfareDenmark.APIControllers {
 
         // api/results
         [HttpPost]
-        public IActionResult PostGameResult([FromBody] GameResultDTO gameResultDto) {
+        public IActionResult PostGameResult([FromBody] GameResultDto gameResultDto) {
             var brainGame = _context.BrainGames.FirstOrDefault(game => game.Name == gameResultDto.Name);
             if (brainGame == null) {
                 _context.Add(new BrainGame {Name = gameResultDto.Name});

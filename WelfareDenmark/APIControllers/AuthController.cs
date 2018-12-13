@@ -33,12 +33,9 @@ namespace WelfareDenmark.APIControllers {
         public async Task<IActionResult> Login([FromBody] LoginDto model) {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
-            if (result.Succeeded) {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return Ok(new {Token = await GenerateJwtToken(model.Email, appUser)});
-            }
-
-            return Unauthorized();
+            if (!result.Succeeded) return Unauthorized();
+            var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+            return Ok(new {Token = await GenerateJwtToken(appUser)});
         }
 
         [AllowAnonymous]
@@ -53,27 +50,23 @@ namespace WelfareDenmark.APIControllers {
             var consultant = await _userManager.GetUserAsync(User);
             consultant.Patients.Add(user);
             await _userManager.UpdateAsync(consultant);
-            if (result.Succeeded) {
-                await _signInManager.SignInAsync(consultant, false);
-                return Ok(new {Tokem = await GenerateJwtToken(model.Email, consultant)});
-            }
-
-
-            throw new ApplicationException("UNKNOWN_ERROR");
+            if (!result.Succeeded) throw new ApplicationException("UNKNOWN_ERROR");
+            await _signInManager.SignInAsync(consultant, false);
+            return Ok(new {Tokem = await GenerateJwtToken(consultant)});
         }
 
-        private async Task<string> GenerateJwtToken(string email, ApplicationUser user) {
+        private async Task<string> GenerateJwtToken(ApplicationUser user) {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(_userManager.Options.ClaimsIdentity.UserIdClaimType, user.Id),
-                new Claim( ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.UserName)
             };
             var userClaims = await _userManager.GetClaimsAsync(user);
             claims.AddRange(userClaims);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Value.JwtKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(_appSettings.Value.JwtExpireDays);
 
             var token = new JwtSecurityToken(
@@ -81,7 +74,7 @@ namespace WelfareDenmark.APIControllers {
                 _appSettings.Value.JwtIssuer,
                 claims,
                 expires: expires,
-                signingCredentials: creds
+                signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);

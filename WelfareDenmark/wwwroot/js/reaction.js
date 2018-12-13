@@ -34,19 +34,19 @@
         $form.submit();
     }
     function add(a, b) {
-        return a + b
+        return a + b;
     }
     function renderResults() {
         var avgTimeElapsed = results.reduce(add) / results.length;
         timeDisplay.innerHTML = '';
-        var $li_ = document.createElement("li");
-        $li_.innerHTML = 'Your average reaction time was ' + avgTimeElapsed + ' milliseconds';
-        timeDisplay.appendChild($li_);
+        var $liAvg = document.createElement("li");
+        $liAvg.innerHTML = 'Your average reaction time was ' + avgTimeElapsed + ' milliseconds';
+        timeDisplay.appendChild($liAvg);
         for (var index = 0; index < results.length; index++) {
-            var timeElapsed = results[index];
-            var $li = document.createElement("li");
-            $li.innerHTML = 'Your reaction time was ' + timeElapsed + ' milliseconds';
-            timeDisplay.appendChild($li);
+            var reactionTime = results[index];
+            var $liResult = document.createElement("li");
+            $liResult.innerHTML = 'Your reaction time was ' + reactionTime + ' milliseconds';
+            timeDisplay.appendChild($liResult);
         }
     }
 
@@ -57,7 +57,7 @@
 
     function start() {
         changeState(stateTypes.waiting);
-        timeout = setTimeout(waitToReady, RNG());
+        timeout = setTimeout(waitToReady, rng());
     }
 
     function end() {
@@ -106,7 +106,7 @@
     /**
      * @return {number}
      */
-    function RNG() {
+    function rng() {
         return 2500 + Math.random() * 1000;
     }
 

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using Microsoft.AspNetCore.Identity;
 
 namespace WelfareDenmark.Models {
@@ -8,7 +7,6 @@ namespace WelfareDenmark.Models {
             Patients = new HashSet<ApplicationUser>();
         }
 
-        [DisplayName("Patients:")]
-        public virtual ICollection<ApplicationUser> Patients { get; set; }
+        public ICollection<ApplicationUser> Patients { get; set; }
     }
 }

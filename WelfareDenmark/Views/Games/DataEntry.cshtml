@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model GameResultDTO
+@model GameResultDto
 @{
     ViewBag.Title = "Your data";
     Layout = "_Layout";
@@ -10,6 +10,7 @@
 
     @using (Html.BeginForm()) {
         <div>
+            @* ReSharper disable once UnknownCssClass *@
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label asp-for="Name" class="mdl-textfield__label"></label>
                 <input asp-for="Name" class="mdl-textfield__input"/>
@@ -17,6 +18,7 @@
             </div>
         </div>
         <div>
+            @* ReSharper disable once UnknownCssClass *@
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label asp-for="Score" class="mdl-textfield__label"></label>
                 <input asp-for="Score" class="mdl-textfield__input" pattern="-?[0-9][0-9]*"/>

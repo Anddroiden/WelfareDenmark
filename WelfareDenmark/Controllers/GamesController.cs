@@ -51,7 +51,7 @@ namespace WelfareDenmark.Controllers {
         
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult DataEntry(GameResultDTO dto) {
+        public IActionResult DataEntry(GameResultDto dto) {
             if (!ModelState.IsValid) return View();
 
             var brainGame = _db.BrainGames.FirstOrDefault(bg => bg.Name == dto.Name);

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace WelfareDenmark.Models {
-    public class GameResultDTO {
+    public class GameResultDto {
         [Display(Name = "Game Title")]
         [DataType(DataType.Text)]
         [Required]

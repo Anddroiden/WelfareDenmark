@@ -8,7 +8,7 @@ namespace WelfareDenmark.Data {
             : base(options) {
         }
 
-        public virtual DbSet<BrainGame> BrainGames { get; set; }
+        public DbSet<BrainGame> BrainGames { get; set; }
         public DbSet<GameResult> Results { get; set; }
     }
 }

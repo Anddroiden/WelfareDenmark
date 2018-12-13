@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WelfareDenmark.Data;
 using WelfareDenmark.Models;
 
@@ -54,10 +52,6 @@ namespace WelfareDenmark.APIControllers {
             await _context.SaveChangesAsync();
 
             return Ok(brainGame);
-        }
-
-        private bool BrainGameExists(long id) {
-            return _context.BrainGames.Any(e => e.Id == id);
         }
     }
 }
