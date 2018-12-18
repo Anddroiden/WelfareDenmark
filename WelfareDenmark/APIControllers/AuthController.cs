@@ -51,10 +51,9 @@ namespace WelfareDenmark.APIControllers {
             consultant.Patients.Add(user);
             await _userManager.UpdateAsync(consultant);
             if (!result.Succeeded) throw new ApplicationException("UNKNOWN_ERROR");
-            await _signInManager.SignInAsync(consultant, false);
-            return Ok(new {Tokem = await GenerateJwtToken(consultant)});
+            return Ok();
         }
-
+        
         private async Task<string> GenerateJwtToken(ApplicationUser user) {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
