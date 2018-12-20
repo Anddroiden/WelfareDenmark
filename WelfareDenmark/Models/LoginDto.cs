@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WelfareDenmark.APIControllers {
+namespace WelfareDenmark.Models {
     public class LoginDto {
         [Required] public string Email { get; set; }
 
