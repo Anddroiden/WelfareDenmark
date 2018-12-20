@@ -14,14 +14,14 @@ namespace WelfareDenmark.Controllers {
         }
 
         [Authorize(Policy = PolicyConstants.IsPatient)]
-        [Route("[controller]")]
+        [Route("results")]
         public IActionResult Index() {
             var brainGames = GetBrainGames(User.Identity.Name);
             return View(brainGames);
         }
 
         [Authorize(Policy = PolicyConstants.IsPatient)]
-        [Route("[controller]/details")]
+        [Route("results/details/{id}")]
         public IActionResult Details(long id) {
             var gameResult = _db.Results.Include(r => r.BrainGame).First(r => r.Id == id);
             if (gameResult is null) return NotFound();

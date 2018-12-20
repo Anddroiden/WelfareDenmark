@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WelfareDenmark.Data;
 using WelfareDenmark.Models;
@@ -7,6 +9,7 @@ using WelfareDenmark.Models;
 namespace WelfareDenmark.APIControllers {
     [Route("api/BrainGames")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BrainGamesController : ControllerBase {
         private readonly ApplicationDbContext _context;
 

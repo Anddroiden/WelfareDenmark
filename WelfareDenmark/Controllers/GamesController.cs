@@ -22,7 +22,8 @@ namespace WelfareDenmark.Controllers {
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Reaction(GameResult gameResult) {
-            if (!ModelState.IsValid) return View();
+            Console.WriteLine(ModelState.ErrorCount);
+//            if (!ModelState.IsValid) return View();
             var brainGame = _db.BrainGames.FirstOrDefault(bg => bg.Name == "Reaction");
             if (brainGame is null) {
                 brainGame = new BrainGame {Name = "Reaction"};
